@@ -16,12 +16,14 @@ label {
   margin: 10px 0 5px;
 }
 input {
-  width: 70%;
+  width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 button {
+  width: fit-content;
+  white-space: nowrap;
   padding: 10px 15px;
   background-color: #007bff;
   color: white;
@@ -44,7 +46,9 @@ button:hover {
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
-  width: 40%;
+  width: 24%;
+  margin: 0.5%;
+  margin-bottom: 10px;
 }
 
 .card:hover {
@@ -53,4 +57,21 @@ button:hover {
 
 .container {
   padding: 2px 16px;
+}
+
+.recipe-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1024px) {
+  .card {
+    width: 31%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    width: 44%;
+  }
 }

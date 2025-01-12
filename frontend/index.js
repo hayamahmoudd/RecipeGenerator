@@ -28,8 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
           recipeList.innerHTML = "";
 
           recipes.forEach((recipe) => {
-            const recipeItem = document.createElement("li");
-            recipeItem.textContent = recipe.title;
+            const recipeItem = cardDiv(recipe);
             recipeList.appendChild(recipeItem);
           });
         }
@@ -38,3 +37,27 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 });
+
+const cardDiv = (recipe) => {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const img = document.createElement("img");
+  img.src = recipe.image;
+  img.alt = recipe.title;
+  img.style.width = "100%";
+
+  const container = document.createElement("div");
+  container.className = "container";
+
+  const title = document.createElement("h4");
+  const bold = document.createElement("b");
+  bold.textContent = recipe.title;
+  title.appendChild(bold);
+
+  container.appendChild(title);
+  card.appendChild(img);
+  card.appendChild(container);
+
+  return card;
+};
