@@ -1,44 +1,57 @@
-const express = require('express');
-const path = require('path');
+// npm start - start backend
+// git add . (to add all changes)
+// git status to ensure you're pushing what you're supposed to (no .env or senstive data)
+// git commit -m "<insert message>"
+// git push
+
+// npm i dotenv
+
+const express = require("express");
+const path = require("path");
+const dotenv = require("dotenv");
 
 const app = express();
 const PORT = 3000;
 
 // Serve static frontend files
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, "./frontend")));
 
-// Example API route
-app.get('/hello', (req, res) => {
-  res.json({ message: 'Hello from the backend!' });
+// Route to serve frontend.html at the root URL
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "./frontend/frontend.html"));
 });
 
-//https://api.spoonacular.com/recipes/findByIngredients?ingredients=carrots,tomatoes&number=10&limitLicense=true&ranking=1&ignorePantry=false
+dotenv.config();
+const axios = require("axios");
 
-// use this as reference
-app.get('/externalExample', async (req, res) => {
-    console.log(req.params)
-    const apiResponse = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-    const data = await apiResponse.json()
+app.get("/recipeGenerator", async (req, res) => {
+  // Capture user input
+  const ingredients = req.query.ingredients; // Default if no input provided
 
-    console.log(data)
-    res.json(data)
+  if (!ingredients) {
+    res.json({ success: false, message: "No ingredients provided." });
+  }
 
-});
-
-app.get('/recipeGenerator', async (req, res) => {
-  console.log(req.params);
-
-  const apiKey = 'ee68ae0f284644478fedb503667bdd5a'; 
-  const apiUrl = `https://api.spoonacular.com/recipes/findByIngredients?apiKey=${apiKey}&ingredients=tomato,cheese`;
+  // Debugging: Log the user-provided ingredients
+  console.log("User Ingredients:", ingredients);
 
   try {
-      const apiResponse = await fetch(apiUrl); 
-      const data = await apiResponse.json(); 
+    const apiKey = process.env.API_KEY;
+    const response = await axios.get(
+      "https://api.spoonacular.com/recipes/findByIngredients",
+      {
+        params: {
+          apiKey,
+          ingredients,
+        },
+      }
+    );
 
-      console.log(data); 
-      res.json(data);   
+    // Send the API response back to the user
+    res.json({ success: true, data: response.data });
   } catch (error) {
-      console.error('Error fetching data:', error.message);
+    console.error("Error fetching recipes:", error.message);
+    res.status(500).json({ error: "Failed to fetch recipes." });
   }
 });
 
