@@ -27,10 +27,30 @@ document.addEventListener("DOMContentLoaded", () => {
           const recipeList = document.getElementById("recipeList");
           recipeList.innerHTML = "";
 
-          recipes.forEach((recipe) => {
-            const recipeItem = cardDiv(recipe);
-            recipeList.appendChild(recipeItem);
-          });
+          data.data.forEach((recipe) => {
+            const card = document.createElement("li");
+            card.className = "card";
+            // Create card content
+            card.innerHTML = `
+              <div class="card-content">
+                <img src="${recipe.image}" alt="${recipe.title}" class="card-image">
+                <div class="card-hover">
+                  <p><b>Used Ingredients:</b> ${recipe.usedIngredients.join(", ")}</p>
+                  <p><b>Missing Ingredients:</b> ${recipe.missedIngredients.join(", ")}</p>
+                </div>
+                <div class="container">
+                  <h4>${recipe.title}</h4>
+                </div>
+              </div>
+            `;
+            // Redirect to recipe URL on click
+            card.addEventListener("click", () => {
+              window.open(recipe.recipeUrl, "_blank");
+            });
+            recipeList.appendChild(card);
+            });
+        } else {
+          alert(data.message);
         }
       } catch (error) {
         console.error("Error fetching recipes:", error.message);

@@ -8,22 +8,26 @@
   </head>
 
   <body>
-    <h1>Recipe Generator</h1>
-    <form id="usrInput" class="submission-form">
-      <label for="ingredients">Enter Ingredients (comma-separated):</label>
-      <div class="form-inputs">
-        <input
-          type="text"
-          id="ingredients"
-          name="ingredients"
-          placeholder="e.g. tomato,cheese"
-          required
-        />
-        <button type="submit">Search</button>
-      </div>
-    </form>
+    <header>
+      <h1>Recipe Generator</h1>
+    </header>
+    <main>
+      <form id="usrInput" class="submission-form">
+        <label for="ingredients">Enter Ingredients (comma-separated):</label>
+        <div class="form-inputs">
+          <input
+            type="text"
+            id="ingredients"
+            name="ingredients"
+            placeholder="e.g. tomato, cheese"
+            required
+          />
+          <button type="submit">Search</button>
+        </div>
+      </form>
 
-    <ul id="recipeList" class="recipe-list"></ul>
+      <ul id="recipeList" class="recipe-list"></ul>
+    </main>
     <script src="index.js"></script>
   </body>
 </html>

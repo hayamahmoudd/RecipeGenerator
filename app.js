@@ -10,18 +10,18 @@
 // git commit -m "<insert message>"
 // git push
 
-const express = require("express");
-const path = require("path");
-const dotenv = require("dotenv");
+const express = require("express"); // Importing express for server creation
+const path = require("path"); // Importing path for handling file paths
+const dotenv = require("dotenv"); // Importing dotenv for environment variable management (useful for sensitive data like API keys)
 
-const app = express();
-const PORT = 3000;
+const app = express(); // Create an instance of express
+const PORT = 3000;// Define the port on which the server will listen
 
-const axios = require("axios");
-dotenv.config();
+const axios = require("axios"); // Importing axios for making HTTP requests
+dotenv.config(); // Load environment variables from .env file
 
 // Serve static frontend files
-app.use(express.static(path.join(__dirname, "./frontend")));
+app.use(express.static(path.join(__dirname, "./frontend"))); 
 
 // Route to serve frontend.html at the root URL
 app.get("/", (req, res) => {
@@ -48,14 +48,27 @@ app.get("/recipeGenerator", async (req, res) => {
       }
     );
 
+    const recipes = response.data.map((recipe) => ({
+      title: recipe.title,
+      image: recipe.image,
+      usedIngredients: recipe.usedIngredients.map(ing => ing.name), // Extracting used ingredients
+      missedIngredients: recipe.missedIngredients.map(ing => ing.name), // Extracting missed ingredients
+      recipeUrl: `https://spoonacular.com/recipes/${recipe.title.replace(
+        / /g,
+        "-"
+      )}-${recipe.id}`,
+    }));
+
     // Send the API response back to the user
-    res.json({ success: true, data: response.data });
-  } catch (error) {
+    res.json({ success: true, data: recipes});
+    
+  } catch (error) {// Handle errors from the API request
     console.error("Error fetching recipes:", error.message);
     res.status(500).json({ error: "Failed to fetch recipes." });
   }
 });
 
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
