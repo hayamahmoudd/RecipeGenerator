@@ -50,7 +50,7 @@ Generate delicious recipes on the fly using ingredients you already have at home
    Navigate to `http://localhost:3000`
 
 
-## 🛠️ Built With
+## Built With
 
 - **Backend:** Node.js, Express.js
 - **API:** Spoonacular Food API
