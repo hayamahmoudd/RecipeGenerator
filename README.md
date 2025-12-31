@@ -8,7 +8,6 @@ Generate delicious recipes on the fly using ingredients you already have at home
 
 - 🔍 **Smart Recipe Search** - Enter ingredients you have and discover matching recipes
 - 📊 **Ingredient Tracking** - See which of your ingredients are used and what's missing
-- 🎨 **Beautiful UI** - Modern, responsive interface with gradient design
 - 🔗 **Direct Recipe Links** - Click through to full recipes on Spoonacular
 - ⚡ **Real-time Results** - Fast API integration for instant recipe suggestions
 
@@ -64,7 +63,3 @@ Generate delicious recipes on the fly using ingredients you already have at home
 - **Frontend:** HTML5, CSS3, Vanilla JavaScript
 - **HTTP Client:** Axios
 - **Development:** Nodemon
-
-## 🔑 API Integration
-
-This app uses the [Spoonacular API](https://spoonacular.com/food-api) to fetch recipe data. The `/recipeGenerator` endpoint queries the `findByIngredients` endpoint to retrieve recipes matching your input.
